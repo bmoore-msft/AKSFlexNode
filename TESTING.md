@@ -96,10 +96,10 @@ make verify
 
 ### Installing golangci-lint
 
-If you don't have golangci-lint installed:
+The project uses golangci-lint v2. If you don't have it installed:
 
 ```bash
-# Linux/macOS
+# Linux/macOS (installs latest version)
 curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
 # macOS with Homebrew
@@ -111,29 +111,17 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
 ## Linter Configuration
 
-The project uses `.golangci.yml` for linter configuration with the following enabled checks:
+The project uses `.golangci.yml` (v2 format) for linter configuration with the following enabled checks:
 
-**Default Linters:**
-- errcheck - Checks for unchecked errors
-- gosimple - Suggests code simplifications
+**Enabled Linters:**
+- errcheck - Checks for unchecked errors (with `check-blank: false` to allow `_ =` in defer)
 - govet - Reports suspicious constructs
 - ineffassign - Detects ineffectual assignments
-- staticcheck - Advanced static analysis
+- staticcheck - Advanced static analysis (includes gosimple checks)
 - unused - Finds unused code
 
-**Additional Linters:**
-- bodyclose - Checks HTTP response body is closed
-- dupl - Finds duplicate code
-- gocyclo - Checks cyclomatic complexity
-- gofmt - Validates code formatting
-- goimports - Checks import formatting
-- gosec - Security vulnerability scanner
-- misspell - Finds commonly misspelled words
-- revive - Fast, configurable, extensible Go linter
-
 **Exclusions:**
-- G204 (subprocess with variable) - Expected for this project
-- G304 (file path taint) - Expected for config loading
+- Test files (`_test.go`) are excluded from errcheck to allow testing error conditions
 
 ## Test Coverage
 

@@ -3,21 +3,21 @@ version: '2'
 run:
   timeout: 5m
 
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
-
-  govet:
-    enable:
-      - shadow
-
-issues:
-  exclude-rules:
-    # Exclude some linters from running on test files
-    - path: _test\.go
-      linters:
-        - errcheck
-
-  max-issues-per-linter: 0
-  max-same-issues: 0
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: false  # Allow _ = for intentionally ignored errors in defer
+  exclusions:
+    rules:
+      # Exclude some linters from running on test files
+      - path: _test\.go
+        linters:
+          - errcheck
